@@ -1,26 +1,27 @@
-import BackButton from "../Button/BackButton";
-import styles from "./City.module.css";
+import { useParams } from 'react-router-dom';
+import BackButton from '../Button/BackButton';
+import styles from './City.module.css';
 
 export const formatDate = (date: string | null) => {
   if (date === null) return;
-  
-  return new Intl.DateTimeFormat("en", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-    weekday: "long",
-  }).format(new Date(date));
-}
- 
 
+  return new Intl.DateTimeFormat('en', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    weekday: 'long',
+  }).format(new Date(date));
+};
 
 function City() {
+  const { id } = useParams();
+  console.log({ id });
   // TEMP DATA
   const currentCity = {
-    cityName: "Lisbon",
-    emoji: "🇵🇹",
-    date: "2027-10-31T15:59:59.138Z",
-    notes: "My favorite city so far!",
+    cityName: 'Lisbon',
+    emoji: '🇵🇹',
+    date: '2027-10-31T15:59:59.138Z',
+    notes: 'My favorite city so far!',
   };
 
   const { cityName, emoji, date, notes } = currentCity;

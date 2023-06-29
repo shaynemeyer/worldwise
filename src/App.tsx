@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Product from './pages/Product';
 import Pricing from './pages/Pricing';
 import Homepage from './pages/Homepage';
@@ -8,8 +8,11 @@ import AppLayout from './pages/AppLayout';
 import CityList from './components/City/CityList';
 import { useEffect, useState } from 'react';
 import { CityListItem } from '../types/Cities';
+import CountryList from './components/Country/CountryList';
+import City from './components/City/City';
+import Form from './components/Form/Form';
 
-const BASE_URL = "http://localhost:9000";
+const BASE_URL = 'http://localhost:9000';
 
 function App() {
   const [cities, setCities] = useState<CityListItem[]>([]);
@@ -26,11 +29,11 @@ function App() {
         alert('Error fetching cities');
       } finally {
         setIsLoading(false);
-      } 
+      }
     }
 
     fetchCities();
-  }, [])
+  }, []);
 
   return (
     <BrowserRouter>
@@ -39,11 +42,18 @@ function App() {
         <Route path="product" element={<Product />} />
         <Route path="pricing" element={<Pricing />} />
         <Route path="login" element={<Login />} />
-        <Route path='app' element={<AppLayout />}>
-          <Route index element={<CityList cities={cities} isLoading={isLoading}/>} />
-          <Route path="cities" element={<CityList cities={cities} isLoading={isLoading} />} />
-          <Route path="countries" element={<p>List of countries</p>} />
-          <Route path="form" element={<p>Form</p>} />
+        <Route path="app" element={<AppLayout />}>
+          <Route index element={<Navigate to="cities" />} />
+          <Route
+            path="cities"
+            element={<CityList cities={cities} isLoading={isLoading} />}
+          />
+          <Route path="cities/:id" element={<City />} />
+          <Route
+            path="countries"
+            element={<CountryList cities={cities} isLoading={isLoading} />}
+          />
+          <Route path="form" element={<Form />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

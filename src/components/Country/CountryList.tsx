@@ -9,30 +9,32 @@ interface CountryListProps {
   isLoading: boolean;
 }
 
-interface CountryItemType{
+interface CountryItemType {
   country: string;
   emoji: string;
 }
 
-function CountryList({ cities, isLoading} : CountryListProps) {
-  
+function CountryList({ cities, isLoading }: CountryListProps) {
   if (isLoading) return <Spinner />;
 
-  if (!cities.length) return <Message message='Add your first city by clicking on the map' />;
-  
-  const countries = cities.reduce((arr: CountryItemType[], city) => {
-    if (!arr.map((el: CityListItem) => el.country).includes(city.country)) {
-      return [...arr, { country: city.country, emoji: city.emoji}] as unknown as CountryItemType;
-    }
+  if (!cities.length)
+    return <Message message="Add your first city by clicking on the map" />;
 
-    return arr as unknown as CountryItemType[];
-  },  []) as unknown as Array<CountryItemType>;
+  const countries: CountryItemType[] = [];
+
+  cities.forEach((city) => {
+    if (!countries.map((c) => c.country).includes(city.country)) {
+      countries.push({ country: city.country, emoji: city.emoji });
+    }
+  });
 
   return (
     <ul className={styles.countryList}>
-      {countries.map((country) => <CountryItem country={country} key={country.country} />)}
+      {countries.map((country) => (
+        <CountryItem country={country} key={country.country} />
+      ))}
     </ul>
-  )
+  );
 }
 
-export default CountryList
+export default CountryList;

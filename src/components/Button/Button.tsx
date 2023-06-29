@@ -5,10 +5,10 @@ interface ButtonProps {
   children: React.ReactNode;
   disabled?: boolean;
   onClick?: (event: SyntheticEvent<HTMLButtonElement>) => void;
-  type: string;
+  type?: string;
 }
 
-function Button({ children, onClick, type }: ButtonProps) {
+function Button({ children, onClick, type = 'primary' }: ButtonProps) {
   return (
     <button onClick={onClick} className={`${styles.btn} ${styles[type]}`}>
       {children}
