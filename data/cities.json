@@ -35,6 +35,30 @@
         "lng": 13.376933665713324
       },
       "id": 98443197
+    },
+    {
+      "cityName": "Castello de la Plana",
+      "country": "Spain",
+      "date": "2023-07-01T22:33:11.355Z",
+      "notes": "",
+      "emoji": "🇪🇸",
+      "position": {
+        "lat": 39.984502439208875,
+        "lng": -0.04068374633789063
+      },
+      "id": 98443198
+    },
+    {
+      "cityName": "Schleitheim",
+      "country": "Switzerland",
+      "date": "2002-07-04T22:35:31.000Z",
+      "notes": "It was awesome",
+      "emoji": "🇨🇭",
+      "position": {
+        "lat": 47.75045114243571,
+        "lng": 8.486595153808596
+      },
+      "id": 98443199
     }
   ]
 }
