@@ -1,20 +1,16 @@
-import { CityListItem } from '../../../types/Cities';
 import Message from '../Message/Message';
 import Spinner from '../Spinner/Spinner';
 import styles from './CountryList.module.css';
 import CountryItem from './CountryItem';
-
-interface CountryListProps {
-  cities: CityListItem[];
-  isLoading: boolean;
-}
+import { useCities } from '../../context/CitiesContext';
 
 interface CountryItemType {
   country: string;
   emoji: string;
 }
 
-function CountryList({ cities, isLoading }: CountryListProps) {
+function CountryList() {
+  const { cities, isLoading } = useCities();
   if (isLoading) return <Spinner />;
 
   if (!cities.length)

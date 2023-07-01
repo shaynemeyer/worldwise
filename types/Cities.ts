@@ -5,8 +5,8 @@ export interface CityListItem {
   date: string;
   notes: string;
   position: {
-   lat: number;
+    lat: number;
     lng: number;
-  },
+  };
   id: number;
 }

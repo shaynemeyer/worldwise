@@ -1,6 +1,9 @@
 import { useParams } from 'react-router-dom';
 import BackButton from '../Button/BackButton';
 import styles from './City.module.css';
+import { useCities } from '../../context/CitiesContext';
+import { useEffect } from 'react';
+import Spinner from '../Spinner/Spinner';
 
 export const formatDate = (date: string | null) => {
   if (date === null) return;
@@ -15,54 +18,55 @@ export const formatDate = (date: string | null) => {
 
 function City() {
   const { id } = useParams();
-  console.log({ id });
-  // TEMP DATA
-  const currentCity = {
-    cityName: 'Lisbon',
-    emoji: '🇵🇹',
-    date: '2027-10-31T15:59:59.138Z',
-    notes: 'My favorite city so far!',
-  };
+  const { getCity, currentCity, isLoading } = useCities();
 
-  const { cityName, emoji, date, notes } = currentCity;
+  useEffect(() => {
+    if (id) {
+      getCity(id);
+    }
+  }, [id]);
 
-  return (
-    <div className={styles.city}>
-      <div className={styles.row}>
-        <h6>City name</h6>
-        <h3>
-          <span>{emoji}</span> {cityName}
-        </h3>
-      </div>
+  if (isLoading) <Spinner />;
 
-      <div className={styles.row}>
-        <h6>You went to {cityName} on</h6>
-        <p>{formatDate(date || null)}</p>
-      </div>
-
-      {notes && (
+  if (!isLoading && currentCity) {
+    return (
+      <div className={styles.city}>
         <div className={styles.row}>
-          <h6>Your notes</h6>
-          <p>{notes}</p>
+          <h6>City name</h6>
+          <h3>
+            <span>{currentCity.emoji}</span> {currentCity.cityName}
+          </h3>
         </div>
-      )}
 
-      <div className={styles.row}>
-        <h6>Learn more</h6>
-        <a
-          href={`https://en.wikipedia.org/wiki/${cityName}`}
-          target="_blank"
-          rel="noreferrer"
-        >
-          Check out {cityName} on Wikipedia &rarr;
-        </a>
-      </div>
+        <div className={styles.row}>
+          <h6>You went to {currentCity.cityName} on</h6>
+          <p>{formatDate(currentCity.date || null)}</p>
+        </div>
 
-      <div>
-        <BackButton />
+        {currentCity.notes && (
+          <div className={styles.row}>
+            <h6>Your notes</h6>
+            <p>{currentCity.notes}</p>
+          </div>
+        )}
+
+        <div className={styles.row}>
+          <h6>Learn more</h6>
+          <a
+            href={`https://en.wikipedia.org/wiki/${currentCity.cityName}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Check out {currentCity.cityName} on Wikipedia &rarr;
+          </a>
+        </div>
+
+        <div>
+          <BackButton />
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default City;
