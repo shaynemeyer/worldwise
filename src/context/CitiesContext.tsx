@@ -122,7 +122,7 @@ function CitiesProvider({ children }: { children: React.ReactNode }) {
 
   async function getCity(id: string) {
     if (currentCity && Number(id) === currentCity.id) return;
-    
+
     dispatch({ type: "loading" });
     
     try {
