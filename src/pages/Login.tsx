@@ -1,17 +1,26 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PageNav from '../components/Nav/PageNav';
 import styles from './Login.module.css';
 import Button from '../components/Button/Button';
+import { useAuth } from '../context/FakeAuthContext';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const [email, setEmail] = useState('jack@example.com');
   const [password, setPassword] = useState('qwerty');
 
+  const { login, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    // if (email && password) login(email, password);
+    if (email && password) login(email, password);
   }
+
+  useEffect(() => {
+    if (isAuthenticated) navigate('/app', { replace: true });
+  }, [isAuthenticated, navigate]);
 
   return (
     <main className={styles.login}>
@@ -23,7 +32,9 @@ function Login() {
           <input
             type="email"
             id="email"
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setEmail(e.target.value)
+            }
             value={email}
           />
         </div>
@@ -33,7 +44,9 @@ function Login() {
           <input
             type="password"
             id="password"
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setPassword(e.target.value)
+            }
             value={password}
           />
         </div>
