@@ -24,7 +24,7 @@ function City() {
     if (id) {
       getCity(id);
     }
-  }, [id]);
+  }, [id, getCity]);
 
   if (isLoading) <Spinner />;
 
@@ -40,7 +40,7 @@ function City() {
 
         <div className={styles.row}>
           <h6>You went to {currentCity.cityName} on</h6>
-          <p>{formatDate(currentCity.date || null)}</p>
+          <p>{formatDate(`${currentCity.date}` || null)}</p>
         </div>
 
         {currentCity.notes && (
